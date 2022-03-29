@@ -565,7 +565,6 @@ Put your configuration code here, except for variables that should be set
 before packages are loaded."
   (setq undo-tree-auto-save-history nil)
   ;; 29-Mar-2022
-  (autoload 'smartparens)
   (progn
     (define-key evil-insert-state-map (kbd "C-a") 'mwim-beginning-of-code-or-line-or-comment)
     (define-key evil-insert-state-map (kbd "C-e") 'mwim-end-of-code-or-line)
