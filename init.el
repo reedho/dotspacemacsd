@@ -564,7 +564,15 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
   (setq undo-tree-auto-save-history nil)
-)
+  ;; 29-Mar-2022
+  (autoload 'smartparens)
+  (progn
+    (define-key evil-insert-state-map (kbd "C-a") 'mwim-beginning-of-code-or-line-or-comment)
+    (define-key evil-insert-state-map (kbd "C-e") 'mwim-end-of-code-or-line)
+    (define-key evil-insert-state-map (kbd "C-y") 'yank)
+    (define-key evil-insert-state-map (kbd "C-k") 'sp-kill-hybrid-sexp)
+    (define-key evil-insert-state-map (kbd "C-w") 'evil-delete)
+    ))
 
 
 ;; Do not write anything past this comment. This is where Emacs will

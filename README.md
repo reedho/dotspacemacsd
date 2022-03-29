@@ -16,6 +16,29 @@ dotspacemacs-whitespace-cleanup        changed
 undo-tree-auto-save-history            nil
 ```
 
+Change binding key for some common/standard emacs:
+
+```elisp
+(progn
+    (define-key evil-insert-state-map (kbd "C-a") 'mwim-beginning-of-code-or-line-or-comment)
+    (define-key evil-insert-state-map (kbd "C-e") 'mwim-end-of-code-or-line)
+    (define-key evil-insert-state-map (kbd "C-y") 'yank)
+    (define-key evil-insert-state-map (kbd "C-k") 'sp-kill-hybrid-sexp)
+    (define-key evil-insert-state-map (kbd "C-w") 'evil-delete)
+    )
+```
+
+Note: the default for above change is below: 
+
+```
+C-a  evil-paste-last-insertion
+C-e  evil-copy-from-below
+C-y  evil-copy-from-above
+C-k  evil-insert-digraph 
+C-w  evil-delete-backward-word
+```
+
+
 # Configuration Info
 
 ## Clojure
@@ -52,3 +75,14 @@ align-arguments:
   merge
   some-coll)
 ```
+
+
+## Biding Keys
+
+Basic: 
+* Key sequences are bound to cammnds in Emacs in various keymaps.
+* The most basic map is the `global-map`
+* Use `global-set-key` to update the global-map.
+* Use `kbd` macro to define a key sequences with string.
+* The global-map is often shadowed by other maps, e.g. `evil-mode`.
+
