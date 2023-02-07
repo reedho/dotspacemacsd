@@ -32,26 +32,24 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(rust
-     html
-     react
-     typescript
-     (clojure :variables
+   '((clojure :variables
               nrepl-force-ssh-for-remote-hosts  t
-              helm-cider-repl-history-max-lines 300
+              helm-cider-repl-history-max-lines 5
               cider-repl-buffer-size-limit (* 1 20 1024) ;; limit number of chars
               clojure-indent-style 'align-arguments
               ;;clojure-indent-style 'always-align
               ;;clojure-indent-style 'always-indent
+              ;;global-aggressive-indent-mode nil
               clojure-align-forms-automatically nil
               clojure-toplevel-inside-comment-form t
               cider-edit-jack-in-command t
-              ;;global-aggressive-indent-mode nil
               cider-xref-fn-depth 90
-              lsp-enable-indentation t
+              lsp-enable-indentation nil
               lsp-enable-completion-at-point nil
               lsp-eldoc-enable-hover nil
-              )
+
+
+      )
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
@@ -65,16 +63,14 @@ This function should only modify configuration layer settings."
      lsp
      markdown
      multiple-cursors
-     (org :variables
-          org-enable-roam-support t)
+     org
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
      ;; spell-checking
-     syntax-checking
-     version-control
-     treemacs
-     )
+     ;; syntax-checking
+     ;; version-control
+     treemacs)
 
 
    ;; List of additional packages that will be installed without being wrapped
@@ -245,11 +241,11 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil, *scratch* buffer will be persistent. Things you write down in
    ;; *scratch* buffer will be saved and restored automatically.
-   dotspacemacs-scratch-buffer-persistent t
+   dotspacemacs-scratch-buffer-persistent nil
 
    ;; If non-nil, `kill-buffer' on *scratch* buffer
    ;; will bury it instead of killing.
-   dotspacemacs-scratch-buffer-unkillable t
+   dotspacemacs-scratch-buffer-unkillable nil
 
    ;; Initial message in the scratch buffer, such as "Welcome to Spacemacs!"
    ;; (default nil)
@@ -278,7 +274,7 @@ It should only modify the values of Spacemacs settings."
    ;; a non-negative integer (pixel size), or a floating-point (point size).
    ;; Point size is recommended, because it's device independent. (default 10.0)
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 13.0
+                               :size 12.0
                                :weight normal
                                :width normal)
 
@@ -381,7 +377,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default t) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup t
+   dotspacemacs-maximized-at-startup nil
 
    ;; If non-nil the frame is undecorated when Emacs starts up. Combine this
    ;; variable with `dotspacemacs-maximized-at-startup' to obtain fullscreen
@@ -450,7 +446,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil and `dotspacemacs-activate-smartparens-mode' is also non-nil,
    ;; `smartparens-strict-mode' will be enabled in programming modes.
    ;; (default nil)
-   dotspacemacs-smartparens-strict-mode t
+   dotspacemacs-smartparens-strict-mode nil
 
    ;; If non-nil smartparens-mode will be enabled in programming modes.
    ;; (default t)
@@ -459,7 +455,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil pressing the closing parenthesis `)' key in insert mode passes
    ;; over any automatically added closing parenthesis, bracket, quote, etc...
    ;; This can be temporary disabled by pressing `C-q' before `)'. (default nil)
-   dotspacemacs-smart-closing-parenthesis t
+   dotspacemacs-smart-closing-parenthesis nil
 
    ;; Select a scope to highlight delimiters. Possible values are `any',
    ;; `current', `all' or `nil'. Default is `all' (highlight any scope and
@@ -522,7 +518,7 @@ It should only modify the values of Spacemacs settings."
    ;; `trailing' to delete only the whitespace at end of lines, `changed' to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
-   dotspacemacs-whitespace-cleanup 'changed
+   dotspacemacs-whitespace-cleanup nil
 
    ;; If non-nil activate `clean-aindent-mode' which tries to correct
    ;; virtual indentation of simple modes. This can interfere with mode specific
@@ -589,7 +585,6 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-  (setq undo-tree-auto-save-history nil)
   ;; 29-Mar-2022
   (progn
     (define-key evil-insert-state-map (kbd "C-a") 'mwim-beginning-of-code-or-line-or-comment)
@@ -598,44 +593,9 @@ before packages are loaded."
     (define-key evil-insert-state-map (kbd "C-k") 'sp-kill-hybrid-sexp)
     (define-key evil-insert-state-map (kbd "C-w") 'evil-delete)
     )
-  ;; 01-Feb-2023
-  ;; See here for detail: http://xahlee.info/emacs/emacs/emacs_hyper_super_keys.html
-  (setq mac-option-modifier 'super)
+
   )
 
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
-(defun dotspacemacs/emacs-custom-settings ()
-  "Emacs custom settings.
-This is an auto-generated function, do not modify its content directly, use
-Emacs customize menu instead.
-This function is called at the very end of Spacemacs initialization."
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(evil-want-Y-yank-to-eol nil)
- '(package-selected-packages
-   '(cargo counsel-gtags dap-mode lsp-docker bui flycheck-rust ggtags helm-gtags racer ron-mode rust-mode toml-mode tagedit slim-mode scss-mode sass-mode pug-mode impatient-mode helm-css-scss haml-mode counsel-css counsel swiper ivy company-web web-completion-data web-mode typescript-mode import-js grizzl emmet-mode add-node-modules-path org-roam yasnippet-snippets ws-butler writeroom-mode winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package unfill undo-tree treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-evil toc-org symon symbol-overlay string-inflection spaceline-all-the-icons smeargle restart-emacs request rainbow-delimiters quickrun popwin pcre2el password-generator paradox overseer orgit-forge org-superstar org-rich-yank org-projectile org-present org-pomodoro org-mime org-download org-contrib org-cliplink open-junk-file nameless mwim multi-line macrostep lsp-ui lsp-treemacs lsp-origami lorem-ipsum link-hint inspector info+ indent-guide hybrid-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make helm-lsp helm-ls-git helm-git-grep helm-flx helm-descbinds helm-company helm-cider helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitignore-templates git-timemachine git-modes git-messenger git-link fuzzy font-lock+ flycheck-pos-tip flycheck-package flycheck-elsa flx-ido fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-terminal-cursor-changer evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-easymotion evil-collection evil-cleverparens evil-args evil-anzu emr elisp-slime-nav elisp-def editorconfig dumb-jump drag-stuff dotenv-mode dired-quick-sort diminish devdocs define-word column-enforce-mode clojure-snippets clean-aindent-mode cider-eval-sexp-fu centered-cursor-mode auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line ac-ispell))
- '(safe-local-variable-values
-   '((cider-clojure-cli-aliases . :jvm-base)
-     (clojure-backend quote lsp)
-     (clojure-backend quote cider)
-     (aggressive-indent-mode)
-     (cider-preferred-build-tool . "shadow-cljs")
-     (cider-jack-in-nrepl-middlewares "cider.nrepl/cider-middleware" "shadow.cljs.devtools.server.nrepl/middleware")
-     (js-indent-level . 2)
-     (typescript-backend . tide)
-     (typescript-backend . lsp)
-     (javascript-backend . tide)
-     (javascript-backend . tern)
-     (javascript-backend . lsp))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(highlight-parentheses-highlight ((nil (:weight ultra-bold))) t))
-)
